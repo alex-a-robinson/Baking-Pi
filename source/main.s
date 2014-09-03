@@ -31,11 +31,24 @@ lsl r1,#16
 
 /* 
 * Set GPIO 16 to low, causing the LED to turn on.
+* Then wait and set it to high (turning it off) and repeat
 */
+
+loop$:
+
+mov r2,#0x3F0000
+wait1$:
+sub r2,#1
+cmp r2,#0
+bne wait1$
+
 str r1,[r0,#40]
 
-/*
-* Loop over this forevermore
-*/
-loop$: 
+mov r2,#0x3F0000
+wait2$:
+sub r2,#1
+cmp r2,#0
+bne wait2$
+
+str r1,[r0,#28]
 b loop$
