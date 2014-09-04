@@ -16,10 +16,20 @@ bl SetGpioFunction
 .unreq pinNum
 .unreq pinFunc
 
-pinNum .req r0
-pinVal .req r1
-mov pinNum,#16
-mov pinVal,#0
-bl SetGpio
-.unreq pinNum
-.unreq pinVal
+loop$:
+	mov r0,#16
+	mov r1,#0
+	bl SetGpio
+
+	ldr r0,=100000
+	bl Wait
+	
+	mov r0,#16
+	mov r1,#1
+	bl SetGpio
+	
+	ldr r0,=100000
+	bl Wait
+
+b loop$
+
